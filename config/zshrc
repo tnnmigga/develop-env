@@ -1,0 +1,57 @@
+export ZDOTDIR="${ZDOTDIR:-$HOME}"
+export EDITOR="${EDITOR:-vim}"
+export PAGER="${PAGER:-less}"
+export GOPATH="${GOPATH:-$HOME/go}"
+export GOBIN="${GOBIN:-$GOPATH/bin}"
+export PATH="$HOME/.local/bin:$GOBIN:/usr/local/go/bin:$PATH"
+export ZSH="${ZSH:-/opt/oh-my-zsh}"
+export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+
+ZSH_THEME="${ZSH_THEME:-robbyrussell}"
+DISABLE_AUTO_UPDATE="true"
+COMPLETION_WAITING_DOTS="true"
+
+plugins=(git golang python pip virtualenv z extract colored-man-pages command-not-found zsh-autosuggestions zsh-syntax-highlighting)
+
+if [[ -r "$ZSH/oh-my-zsh.sh" ]]; then
+  source "$ZSH/oh-my-zsh.sh"
+else
+  autoload -Uz colors && colors
+  autoload -Uz compinit && compinit
+fi
+
+setopt auto_cd
+setopt correct
+setopt hist_ignore_all_dups
+setopt share_history
+
+mkdir -p "$HOME/.cache/zsh"
+HISTFILE="$HOME/.cache/zsh/history"
+HISTSIZE=10000
+SAVEHIST=10000
+
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias grep='grep --color=auto'
+alias py='python'
+alias ipy='python -m IPython'
+
+if command -v fzf >/dev/null 2>&1; then
+  [[ -r /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+  [[ -r /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
+fi
+
+if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+  source "$NVM_DIR/nvm.sh"
+fi
+
+if command -v batcat >/dev/null 2>&1 && ! command -v bat >/dev/null 2>&1; then
+  alias bat='batcat'
+fi
+
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+elif [[ ! -r "$ZSH/oh-my-zsh.sh" ]]; then
+  PROMPT='%F{cyan}%n@%m%f:%F{yellow}%~%f %# '
+fi

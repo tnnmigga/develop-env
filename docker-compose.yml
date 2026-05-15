@@ -1,0 +1,13 @@
+name: develop
+
+services:
+  dev:
+    image: dev-env:${image_tag:-latest-arm64}
+    container_name: dev-env
+    platform: ${docker_platform:-linux/arm64}
+    working_dir: /workspace
+    volumes:
+      - ${host_workspace:-${HOME}/Desktop/workspace}:/workspace
+      - ${host_history:-${HOME}/.develop/zsh}:/root/.cache/zsh
+    tty: true
+    stdin_open: true
