@@ -1,5 +1,4 @@
 export ZDOTDIR="${ZDOTDIR:-$HOME}"
-export EDITOR="${EDITOR:-vim}"
 export PAGER="${PAGER:-less}"
 export GOPATH="${GOPATH:-$HOME/go}"
 export GOBIN="${GOBIN:-$GOPATH/bin}"
@@ -37,17 +36,8 @@ alias grep='grep --color=auto'
 alias py='python'
 alias ipy='python -m IPython'
 
-if command -v fzf >/dev/null 2>&1; then
-  [[ -r /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
-  [[ -r /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
-fi
-
 if [[ -s "$NVM_DIR/nvm.sh" ]]; then
   source "$NVM_DIR/nvm.sh"
-fi
-
-if command -v batcat >/dev/null 2>&1 && ! command -v bat >/dev/null 2>&1; then
-  alias bat='batcat'
 fi
 
 if command -v starship >/dev/null 2>&1; then

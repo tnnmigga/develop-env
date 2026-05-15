@@ -4,20 +4,20 @@ This repository builds a personal development image in layers, while keeping one
 
 ## Layer Order
 
-1. `dev-env:00-ubuntu-base-<arch>`
-   - Ubuntu LTS, locale, timezone, and base packages.
-2. `dev-env:10-dev-shell-<arch>`
-   - zsh, Oh My Zsh, tmux, vim, git, fzf, ripgrep, fd, bat, jq, and shell config.
-3. `dev-env:20-golang-<arch>`
+1. `dev-env:ubuntu-base-<arch>`
+   - Ubuntu LTS, locale, timezone, C/C++ build tools, pkg-config, and common command-line tools such as zsh, git, less, SSH, process tools, ping, net-tools, unzip, wget, and zip.
+2. `dev-env:golang-<arch>`
    - Official Go toolchain, Go environment variables, `gopls`, `dlv`, `goimports`, `staticcheck`, `govulncheck`, `mockgen`, `gotests`, and `air`.
-4. `dev-env:30-python-<arch>`
-   - Python virtual environment, pip, uv, IPython, and JupyterLab.
-5. `dev-env:40-ml-<arch>`
-   - NumPy, Pandas, scikit-learn, SciPy, plotting libraries, and optional CPU PyTorch.
-6. `dev-env:45-cuda-ml-<arch>`
-   - CUDA-enabled PyTorch packages for GPU-capable hosts.
-7. `dev-env:50-extra-tools-<arch>`
+3. `dev-env:python-<arch>`
+   - Python virtual environment, pip, uv, and IPython.
+4. `dev-env:ml-<arch>`
+   - NumPy, Pandas, scikit-learn, SciPy, and plotting libraries.
+5. `dev-env:pytorch-<arch>`
+   - PyTorch packages. Mac builds use CPU PyTorch; Win builds use CUDA PyTorch.
+6. `dev-env:extra-tools-<arch>`
    - nvm, Node.js, npm, TypeScript tooling, protobuf compiler, Go protobuf plugins, `buf`, and `grpcurl`.
+7. `dev-env:dev-shell-<arch>`
+   - Oh My Zsh, zsh plugins, and shell config.
 8. `dev-env:latest-<arch>`
    - Final runtime defaults for daily interactive work.
 
@@ -32,7 +32,7 @@ make build
 Build from a specific layer number:
 
 ```bash
-make build stage=30
+make build stage=02
 ```
 
 Build for a target host. The default build is for Mac arm64:
@@ -46,8 +46,10 @@ make build-win
 Available layer numbers:
 
 ```text
-00 10 20 30 40 45 50 90
+00 01 02 03 04 05 06 07
 ```
+
+Dockerfile names keep the numeric order, while image tags use semantic names without numeric prefixes.
 
 Run the development container in the background. This removes the old container first, then recreates it from the current image:
 
@@ -67,7 +69,7 @@ docker compose exec dev zsh
 
 ```bash
 ./scripts/build.sh mac 00
-./scripts/build.sh win 50
+./scripts/build.sh win 05
 ```
 
 The environment is intentionally mostly fixed in the Dockerfiles to keep the setup easy to read and maintain.
@@ -75,7 +77,7 @@ The environment is intentionally mostly fixed in the Dockerfiles to keep the set
 The extra tools layer installs nvm from its latest default branch, then installs the latest Node.js Current release through nvm:
 
 ```bash
-make build stage=50
+make build stage=05
 ```
 
 Stop the container:
@@ -92,15 +94,15 @@ make clean
 
 ## GPU Runtime
 
-The final image includes CUDA-enabled PyTorch packages by default. GPU usage is controlled at runtime.
+Mac images install PyTorch without CUDA. Win images install CUDA-enabled PyTorch packages, and GPU usage is controlled at runtime.
 
 Run with GPU access:
 
 ```bash
-make run gpu=1
+make run-gpu
 ```
 
-The CUDA PyTorch wheel source is fixed in `dockerfiles/45-cuda-ml.Dockerfile`:
+The CUDA PyTorch wheel source for Win builds is fixed in `dockerfiles/04-pytorch.Dockerfile`:
 
 ```bash
 https://download.pytorch.org/whl/cu128

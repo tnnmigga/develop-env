@@ -12,12 +12,14 @@ case "${target}" in
     target_arch="arm64"
     docker_platform="linux/arm64"
     image_suffix="arm64"
+    pytorch_flavor="cpu"
     ;;
   win)
     target="win"
     target_arch="amd64"
     docker_platform="linux/amd64"
     image_suffix="amd64"
+    pytorch_flavor="cuda"
     ;;
   *)
     echo "target must be mac or win" >&2
@@ -40,19 +42,20 @@ build_layer() {
     --tag "${tag}" \
     --build-arg "TARGET_ARCH=${target_arch}" \
     --build-arg "IMAGE_SUFFIX=${image_suffix}" \
+    --build-arg "PYTORCH_FLAVOR=${pytorch_flavor}" \
     "$@" \
     .
 }
 
 layers=(
-  "00|dockerfiles/00-ubuntu-base.Dockerfile|${image_name}:00-ubuntu-base-${image_suffix}"
-  "10|dockerfiles/10-dev-shell.Dockerfile|${image_name}:10-dev-shell-${image_suffix}"
-  "20|dockerfiles/20-golang.Dockerfile|${image_name}:20-golang-${image_suffix}"
-  "30|dockerfiles/30-python.Dockerfile|${image_name}:30-python-${image_suffix}"
-  "40|dockerfiles/40-ml.Dockerfile|${image_name}:40-ml-${image_suffix}"
-  "45|dockerfiles/45-cuda-ml.Dockerfile|${image_name}:45-cuda-ml-${image_suffix}"
-  "50|dockerfiles/50-extra-tools.Dockerfile|${image_name}:50-extra-tools-${image_suffix}"
-  "90|dockerfiles/90-final.Dockerfile|${image_name}:${final_tag}-${image_suffix}"
+  "00|dockerfiles/00-ubuntu-base.Dockerfile|${image_name}:ubuntu-base-${image_suffix}"
+  "01|dockerfiles/01-golang.Dockerfile|${image_name}:golang-${image_suffix}"
+  "02|dockerfiles/02-python.Dockerfile|${image_name}:python-${image_suffix}"
+  "03|dockerfiles/03-ml.Dockerfile|${image_name}:ml-${image_suffix}"
+  "04|dockerfiles/04-pytorch.Dockerfile|${image_name}:pytorch-${image_suffix}"
+  "05|dockerfiles/05-extra-tools.Dockerfile|${image_name}:extra-tools-${image_suffix}"
+  "06|dockerfiles/06-dev-shell.Dockerfile|${image_name}:dev-shell-${image_suffix}"
+  "07|dockerfiles/07-final.Dockerfile|${image_name}:${final_tag}-${image_suffix}"
 )
 
 case "${stage}" in
@@ -60,7 +63,7 @@ case "${stage}" in
 esac
 
 if ! [[ "${stage}" =~ ^[0-9]+$ ]]; then
-  echo "stage must be a numeric layer prefix, for example: 00, 10, 20, 30, 40, 45, 50, 90" >&2
+  echo "stage must be a numeric layer prefix, for example: 00, 01, 02, 03, 04, 05, 06, 07" >&2
   exit 1
 fi
 
@@ -79,7 +82,7 @@ done
 
 if [ -z "${matched_start}" ]; then
   echo "Unknown stage: ${stage}" >&2
-  echo "Available layers: 00, 10, 20, 30, 40, 45, 50, 90" >&2
+  echo "Available layers: 00, 01, 02, 03, 04, 05, 06, 07" >&2
   exit 1
 fi
 
