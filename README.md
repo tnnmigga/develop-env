@@ -132,6 +132,10 @@ By default, Docker Compose maps a dedicated project folder into `/workspace`, an
 ```yaml
 ${HOME}/Desktop/workspace:/workspace
 ${HOME}/.develop/zsh:/root/.cache/zsh
+${HOME}/.develop/vscode-server:/root/.vscode-server
+${HOME}/.codex/auth.json:/root/.codex/auth.json:ro
+${HOME}/.codex/config.toml:/root/.codex/config.toml:ro
+${HOME}/.ssh:/root/.ssh:ro
 ```
 
 Override it when needed:
@@ -139,8 +143,15 @@ Override it when needed:
 ```bash
 host_workspace=/path/to/projects \
 host_history=/path/to/zsh-history-dir \
+host_vscode_server=/path/to/vscode-server-dir \
+host_codex_auth=/path/to/auth.json \
+host_codex_config=/path/to/config.toml \
+host_ssh_dir=/path/to/ssh-dir \
 docker compose up -d
 ```
+
+Codex auth and config are mounted read-only so the container can use the same login and settings without sharing the full host Codex state database and logs.
+SSH config and keys are also mounted read-only so git over SSH can reuse host credentials without letting the container change them.
 
 ## Zsh Plugins
 
