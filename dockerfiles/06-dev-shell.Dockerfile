@@ -16,6 +16,9 @@ COPY config/gitconfig /root/.gitconfig
 # Ensure LF line endings (in case source files have CRLF from Windows)
 RUN sed -i 's/\r$//' /root/.zshrc /root/.gitconfig
 
+RUN echo '[ -f ~/.zshrc ] && source ~/.zshrc' >> /root/.profile \
+    && echo 'export SHELL=/usr/bin/zsh' >> /root/.profile
+
 RUN mkdir -p /workspace
 
 RUN rm -rf /root/.cache
