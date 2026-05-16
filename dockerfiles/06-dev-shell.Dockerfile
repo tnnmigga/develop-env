@@ -13,6 +13,9 @@ RUN git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git /opt/oh-my-zsh \
 COPY config/zshrc /root/.zshrc
 COPY config/gitconfig /root/.gitconfig
 
+# Ensure LF line endings (in case source files have CRLF from Windows)
+RUN sed -i 's/\r$//' /root/.zshrc /root/.gitconfig
+
 RUN mkdir -p /workspace
 
 RUN rm -rf /root/.cache

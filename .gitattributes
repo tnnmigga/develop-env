@@ -1,0 +1,7 @@
+# Force LF line endings for all text files, even on Windows
+* text=auto eol=lf
+
+# Shell scripts and configs must always be LF
+*.sh text eol=lf
+*.zshrc text eol=lf
+config/* text eol=lf
