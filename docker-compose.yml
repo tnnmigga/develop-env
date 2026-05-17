@@ -13,5 +13,7 @@ services:
       - ${host_codex_auth:-${HOME}/.codex/auth.json}:/root/.codex/auth.json
       - ${host_codex_config:-${HOME}/.codex/config.toml}:/root/.codex/config.toml
       - ${host_ssh_dir:-${HOME}/.ssh}:/root/.ssh
+    ports:
+      - "${host_ssh_port:-2222}:22"
     tty: true
     stdin_open: true

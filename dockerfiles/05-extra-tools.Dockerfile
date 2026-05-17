@@ -8,10 +8,24 @@ ENV PATH=/opt/node-current/bin:${PATH}
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+      openssh-server \
       protobuf-compiler \
     && apt-get clean \
     && find /var/lib/apt/lists -mindepth 1 -maxdepth 1 -exec rm -rf {} + \
     && find /tmp /var/tmp -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+
+RUN mkdir -p /run/sshd /etc/ssh/authorized_keys \
+    && chmod 0755 /run/sshd /etc/ssh/authorized_keys \
+    && printf '%s\n' \
+      'PermitRootLogin prohibit-password' \
+      'PasswordAuthentication no' \
+      'KbdInteractiveAuthentication no' \
+      'PubkeyAuthentication yes' \
+      'AuthorizedKeysFile /etc/ssh/authorized_keys/%u' \
+      > /etc/ssh/sshd_config.d/dev-env.conf
+
+COPY config/dev-entrypoint.sh /usr/local/bin/dev-entrypoint.sh
+RUN chmod 0755 /usr/local/bin/dev-entrypoint.sh
 
 RUN git clone --depth=1 https://github.com/nvm-sh/nvm.git "${NVM_DIR}" \
     && . "${NVM_DIR}/nvm.sh" \
@@ -46,4 +60,5 @@ RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@latest \
     && rm -rf /root/.cache/go-build /root/go/pkg/mod \
     && find /tmp /var/tmp -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 
+EXPOSE 22
 WORKDIR /workspace

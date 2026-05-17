@@ -15,7 +15,7 @@ This repository builds a personal development image in layers, while keeping one
 5. `dev-env:pytorch-<arch>`
    - PyTorch packages. Mac builds use CPU PyTorch; Win builds use CUDA PyTorch.
 6. `dev-env:extra-tools-<arch>`
-   - nvm, Node.js, npm, TypeScript tooling, protobuf compiler, Go protobuf plugins, `buf`, and `grpcurl`.
+   - SSH server, nvm, Node.js, npm, TypeScript tooling, protobuf compiler, Go protobuf plugins, `buf`, and `grpcurl`.
 7. `dev-env:dev-shell-<arch>`
    - Oh My Zsh, zsh plugins, and shell config.
 8. `dev-env:latest-<arch>`
@@ -63,6 +63,12 @@ Enter the running container:
 
 ```bash
 docker compose exec dev zsh
+```
+
+Connect to the running container over SSH. The container collects public keys from `/root/.ssh/authorized_keys` and `/root/.ssh/*.pub` at startup, then allows root login by key only:
+
+```bash
+ssh -p 2222 root@localhost
 ```
 
 ## Build Script
@@ -138,6 +144,12 @@ ${HOME}/.codex/config.toml:/root/.codex/config.toml:ro
 ${HOME}/.ssh:/root/.ssh:ro
 ```
 
+It also publishes SSH on the host:
+
+```yaml
+2222:22
+```
+
 Override it when needed:
 
 ```bash
@@ -147,11 +159,13 @@ host_vscode_server=/path/to/vscode-server-dir \
 host_codex_auth=/path/to/auth.json \
 host_codex_config=/path/to/config.toml \
 host_ssh_dir=/path/to/ssh-dir \
+host_ssh_port=2223 \
 docker compose up -d
 ```
 
 Codex auth and config are mounted read-only so the container can use the same login and settings without sharing the full host Codex state database and logs.
 SSH config and keys are also mounted read-only so git over SSH can reuse host credentials without letting the container change them.
+The SSH server disables password authentication and uses the mounted public keys for passwordless login.
 
 ## Zsh Plugins
 

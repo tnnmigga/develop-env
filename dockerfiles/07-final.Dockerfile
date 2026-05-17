@@ -9,4 +9,5 @@ ENV SHELL=/usr/bin/zsh
 ENV WORKDIR=/workspace
 
 WORKDIR /workspace
+ENTRYPOINT ["/usr/local/bin/dev-entrypoint.sh"]
 CMD ["/usr/bin/zsh"]
