@@ -6,6 +6,10 @@ authorized_keys="/etc/ssh/authorized_keys/root"
 mkdir -p /run/sshd /etc/ssh/authorized_keys /root/.ssh
 ssh-keygen -A >/dev/null
 
+if [ "$(getent passwd root | cut -d: -f7)" != "/usr/bin/zsh" ]; then
+  usermod --shell /usr/bin/zsh root
+fi
+
 tmp_keys="$(mktemp)"
 if [ -f /root/.ssh/authorized_keys ]; then
   cat /root/.ssh/authorized_keys >> "${tmp_keys}"
