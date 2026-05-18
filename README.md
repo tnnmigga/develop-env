@@ -15,7 +15,7 @@ This repository builds a personal development image in layers, while keeping one
 5. `dev-env:pytorch-<arch>`
    - PyTorch packages. Mac builds use CPU PyTorch; Win builds use CUDA PyTorch.
 6. `dev-env:extra-tools-<arch>`
-   - SSH server, nvm, Node.js, npm, TypeScript tooling, protobuf compiler, Go protobuf plugins, `buf`, and `grpcurl`.
+   - SSH server, Vim, default editor environment variables, nvm, Node.js, npm, TypeScript tooling, protobuf compiler, Go protobuf plugins, `buf`, and `grpcurl`.
 7. `dev-env:dev-shell-<arch>`
    - Oh My Zsh, zsh plugins, and shell config.
 8. `dev-env:latest-<arch>`

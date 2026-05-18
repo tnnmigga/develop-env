@@ -1,0 +1,25 @@
+set nocompatible
+set encoding=utf-8
+set number
+set ruler
+set showcmd
+set wildmenu
+set mouse=a
+set backspace=indent,eol,start
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+set smartindent
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set laststatus=2
+set statusline=%f\ %m%r%h%w\ [%{&fileformat}]\ [%Y]\ [%l:%c]\ %p%%
+syntax on
+filetype plugin indent on
+
+if &term =~# '256color'
+  set t_Co=256
+endif

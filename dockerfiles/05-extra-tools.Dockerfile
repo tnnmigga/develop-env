@@ -11,6 +11,7 @@ RUN apt-get update \
       htop \
       openssh-server \
       protobuf-compiler \
+      vim \
     && apt-get clean \
     && find /var/lib/apt/lists -mindepth 1 -maxdepth 1 -exec rm -rf {} + \
     && find /tmp /var/tmp -mindepth 1 -maxdepth 1 -exec rm -rf {} +
@@ -26,7 +27,9 @@ RUN mkdir -p /run/sshd /etc/ssh/authorized_keys \
       > /etc/ssh/sshd_config.d/dev-env.conf
 
 COPY config/dev-entrypoint.sh /usr/local/bin/dev-entrypoint.sh
+COPY config/vimrc /root/.vimrc
 RUN chmod 0755 /usr/local/bin/dev-entrypoint.sh
+RUN sed -i 's/\r$//' /root/.vimrc
 
 RUN git clone --depth=1 https://github.com/nvm-sh/nvm.git "${NVM_DIR}" \
     && . "${NVM_DIR}/nvm.sh" \
@@ -60,6 +63,10 @@ RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@latest \
     && go clean -cache -modcache -testcache \
     && rm -rf /root/.cache/go-build /root/go/pkg/mod \
     && find /tmp /var/tmp -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+
+ENV EDITOR=vim
+ENV VISUAL=vim
+ENV GIT_EDITOR=vim
 
 EXPOSE 22
 WORKDIR /workspace
