@@ -8,6 +8,7 @@ ENV PATH=/opt/node-current/bin:${PATH}
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+      htop \
       openssh-server \
       protobuf-compiler \
     && apt-get clean \

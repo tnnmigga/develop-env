@@ -139,9 +139,11 @@ By default, Docker Compose maps a dedicated project folder into `/workspace`, an
 ${HOME}/Desktop/workspace:/workspace
 ${HOME}/.develop/zsh:/root/.cache/zsh
 ${HOME}/.develop/vscode-server:/root/.vscode-server
-${HOME}/.codex/auth.json:/root/.codex/auth.json:ro
-${HOME}/.codex/config.toml:/root/.codex/config.toml:ro
-${HOME}/.ssh:/root/.ssh:ro
+${HOME}/.gitconfig:/root/.gitconfig
+${HOME}/.netrc:/root/.netrc
+${HOME}/.codex/auth.json:/root/.codex/auth.json
+${HOME}/.codex/config.toml:/root/.codex/config.toml
+${HOME}/.ssh:/root/.ssh
 ```
 
 It also publishes SSH on the host:
@@ -156,6 +158,8 @@ Override it when needed:
 host_workspace=/path/to/projects \
 host_history=/path/to/zsh-history-dir \
 host_vscode_server=/path/to/vscode-server-dir \
+host_gitconfig=/path/to/.gitconfig \
+host_netrc=/path/to/.netrc \
 host_codex_auth=/path/to/auth.json \
 host_codex_config=/path/to/config.toml \
 host_ssh_dir=/path/to/ssh-dir \
@@ -163,8 +167,10 @@ host_ssh_port=2223 \
 docker compose up -d
 ```
 
-Codex auth and config are mounted read-only so the container can use the same login and settings without sharing the full host Codex state database and logs.
-SSH config and keys are also mounted read-only so git over SSH can reuse host credentials without letting the container change them.
+Git global config is mounted at `/root/.gitconfig`, so commands such as `git config --global user.email ...` persist to the host config file.
+The `.netrc` file is mounted at `/root/.netrc` for tools that read machine credentials from netrc.
+Codex auth and config are mounted so the container can use the same login and settings without sharing the full host Codex state database and logs.
+SSH config and keys are mounted so git over SSH can reuse host credentials.
 The SSH server disables password authentication and uses the mounted public keys for passwordless login.
 
 ## Zsh Plugins

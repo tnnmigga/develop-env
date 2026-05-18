@@ -10,6 +10,8 @@ services:
       - ${host_workspace:-${HOME}/Desktop/workspace}:/workspace
       - ${host_history:-${HOME}/.develop/zsh}:/root/.cache/zsh
       - ${host_vscode_server:-${HOME}/.develop/vscode-server}:/root/.vscode-server
+      - ${host_gitconfig:-${HOME}/.gitconfig}:/root/.gitconfig
+      - ${host_netrc:-${HOME}/.netrc}:/root/.netrc
       - ${host_codex_auth:-${HOME}/.codex/auth.json}:/root/.codex/auth.json
       - ${host_codex_config:-${HOME}/.codex/config.toml}:/root/.codex/config.toml
       - ${host_ssh_dir:-${HOME}/.ssh}:/root/.ssh
