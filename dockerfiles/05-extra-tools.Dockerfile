@@ -47,6 +47,7 @@ RUN git clone --depth=1 https://github.com/nvm-sh/nvm.git "${NVM_DIR}" \
 RUN . "${NVM_DIR}/nvm.sh" \
     && nvm use default \
     && npm install -g \
+      @anthropic-ai/claude-code \
       typescript \
       ts-node \
       pnpm \
