@@ -1,5 +1,5 @@
 ARG IMAGE_SUFFIX=arm64
-FROM dev-env:extra-tools-${IMAGE_SUFFIX}
+FROM dev-env:python-${IMAGE_SUFFIX}
 
 RUN git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git /opt/oh-my-zsh \
     && git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git /opt/oh-my-zsh/custom/plugins/zsh-autosuggestions \

@@ -44,24 +44,18 @@ clean: stop
 		dev-env:ubuntu-base-arm64 \
 		dev-env:golang-arm64 \
 		dev-env:python-arm64 \
-		dev-env:ml-arm64 \
-		dev-env:pytorch-arm64 \
 		dev-env:extra-tools-arm64 \
 		dev-env:dev-shell-arm64 \
 		dev-env:latest-arm64 \
 		dev-env:ubuntu-base-amd64 \
 		dev-env:golang-amd64 \
 		dev-env:python-amd64 \
-		dev-env:ml-amd64 \
-		dev-env:pytorch-amd64 \
 		dev-env:extra-tools-amd64 \
 		dev-env:dev-shell-amd64 \
 		dev-env:latest-amd64 \
 		dev-env:ubuntu-base \
 		dev-env:golang \
 		dev-env:python \
-		dev-env:ml \
-		dev-env:pytorch \
 		dev-env:extra-tools \
 		dev-env:dev-shell \
 		dev-env:latest \

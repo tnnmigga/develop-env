@@ -36,8 +36,16 @@ alias grep='grep --color=auto'
 alias py='python'
 alias ipy='python -m IPython'
 
+# Clean .npmrc prefix/globalconfig before nvm loads (nvm is incompatible with these)
+if [[ -f "$HOME/.npmrc" ]]; then
+  sed -i '/^prefix=/d; /^globalconfig=/d' "$HOME/.npmrc"
+fi
+
 if [[ -s "$NVM_DIR/nvm.sh" ]]; then
   source "$NVM_DIR/nvm.sh"
+  # Set npm global prefix AFTER nvm init to persist global installs across rebuilds
+  export PATH="$HOME/.npm-global/bin:$PATH"
+  npm config set prefix "$HOME/.npm-global" 2>/dev/null
 fi
 
 if command -v starship >/dev/null 2>&1; then

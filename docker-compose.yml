@@ -17,6 +17,8 @@ services:
       - ${host_claude_config:-${HOME}/.claude.json}:/root/.claude.json
       - ${host_claude_dir:-${HOME}/.claude}:/root/.claude
       - ${host_ssh_dir:-${HOME}/.ssh}:/root/.ssh
+      - ${host_npm_global:-${HOME}/.develop/npm-global}:/root/.npm-global
+      - ${host_npm:-${HOME}/.develop/npm}:/root/.npm
     ports:
       - "${host_ssh_port:-2222}:22"
     restart: unless-stopped

@@ -51,11 +51,9 @@ layers=(
   "00|dockerfiles/00-ubuntu-base.Dockerfile|${image_name}:ubuntu-base-${image_suffix}"
   "01|dockerfiles/01-golang.Dockerfile|${image_name}:golang-${image_suffix}"
   "02|dockerfiles/02-python.Dockerfile|${image_name}:python-${image_suffix}"
-  "03|dockerfiles/03-ml.Dockerfile|${image_name}:ml-${image_suffix}"
-  "04|dockerfiles/04-pytorch.Dockerfile|${image_name}:pytorch-${image_suffix}"
-  "05|dockerfiles/05-extra-tools.Dockerfile|${image_name}:extra-tools-${image_suffix}"
-  "06|dockerfiles/06-dev-shell.Dockerfile|${image_name}:dev-shell-${image_suffix}"
-  "07|dockerfiles/07-final.Dockerfile|${image_name}:${final_tag}-${image_suffix}"
+  "03|dockerfiles/03-dev-shell.Dockerfile|${image_name}:dev-shell-${image_suffix}"
+  "04|dockerfiles/04-extra-tools.Dockerfile|${image_name}:extra-tools-${image_suffix}"
+  "05|dockerfiles/05-final.Dockerfile|${image_name}:${final_tag}-${image_suffix}"
 )
 
 case "${stage}" in
@@ -63,7 +61,7 @@ case "${stage}" in
 esac
 
 if ! [[ "${stage}" =~ ^[0-9]+$ ]]; then
-  echo "stage must be a numeric layer prefix, for example: 00, 01, 02, 03, 04, 05, 06, 07" >&2
+  echo "stage must be a numeric layer prefix, for example: 00, 01, 02, 03, 04, 05" >&2
   exit 1
 fi
 

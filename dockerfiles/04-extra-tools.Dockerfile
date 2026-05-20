@@ -1,5 +1,5 @@
 ARG IMAGE_SUFFIX=arm64
-FROM dev-env:pytorch-${IMAGE_SUFFIX}
+FROM dev-env:dev-shell-${IMAGE_SUFFIX}
 
 ARG DEBIAN_FRONTEND=noninteractive
 
