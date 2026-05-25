@@ -19,6 +19,7 @@ services:
       - ${host_ssh_dir:-${HOME}/.ssh}:/root/.ssh
       - ${host_npm_global:-${HOME}/.develop/npm-global}:/root/.npm-global
       - ${host_npm:-${HOME}/.develop/npm}:/root/.npm
+      - ${host_conda_envs:-${HOME}/.develop/conda-envs}:/opt/conda/envs
     ports:
       - "${host_ssh_port:-2222}:22"
     restart: unless-stopped

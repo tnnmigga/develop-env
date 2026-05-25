@@ -31,10 +31,16 @@ COPY config/vimrc /root/.vimrc
 RUN chmod 0755 /usr/local/bin/dev-entrypoint.sh
 RUN sed -i 's/\r$//' /root/.vimrc
 
+# Switch to bash for nvm (nvm has issues under zsh)
+SHELL ["/bin/bash", "-c"]
+
+# Use Alibaba mirror for Node.js downloads (required for network access in China)
+ENV NVM_NODEJS_ORG_MIRROR=https://npmmirror.com/mirrors/node
+
 RUN git clone --depth=1 https://github.com/nvm-sh/nvm.git "${NVM_DIR}" \
     && . "${NVM_DIR}/nvm.sh" \
-    && nvm install node \
-    && nvm alias default node \
+    && nvm install --lts \
+    && nvm alias default "$(nvm current)" \
     && nvm use default \
     && node_bin="$(nvm which default)" \
     && node_home="$(dirname "$(dirname "${node_bin}")")" \
@@ -46,6 +52,7 @@ RUN git clone --depth=1 https://github.com/nvm-sh/nvm.git "${NVM_DIR}" \
 
 RUN . "${NVM_DIR}/nvm.sh" \
     && nvm use default \
+    && npm config set registry https://registry.npmmirror.com \
     && npm install -g \
       @anthropic-ai/claude-code \
       typescript \
@@ -56,6 +63,8 @@ RUN . "${NVM_DIR}/nvm.sh" \
     && npm cache clean --force \
     && rm -rf /root/.npm/_cacache /root/.npm/_logs \
     && find /tmp /var/tmp -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+
+SHELL ["/usr/bin/zsh", "-lc"]
 
 RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@latest \
     && go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest \
