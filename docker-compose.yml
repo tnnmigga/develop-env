@@ -4,16 +4,18 @@ services:
   dev:
     image: dev-env:${image_tag:-latest-arm64}
     container_name: dev-env
+    hostname: "devenv"
     platform: ${docker_platform:-linux/arm64}
     working_dir: /workspace
     volumes:
       - ${host_workspace:-${HOME}/Desktop/workspace}:/workspace
       - ${host_history:-${HOME}/.develop/zsh}:/root/.cache/zsh
       - ${host_vscode_server:-${HOME}/.develop/vscode-server}:/root/.vscode-server
+      - ${host_cursor_server:-${HOME}/.develop/cursor-server}:/root/.cursor-server
+      - ${host_cursor_extensions:-${HOME}/.develop/cursor}:/root/.cursor
       - ${host_gitconfig:-${HOME}/.gitconfig}:/root/.gitconfig
       - ${host_netrc:-${HOME}/.netrc}:/root/.netrc
-      - ${host_codex_auth:-${HOME}/.codex/auth.json}:/root/.codex/auth.json
-      - ${host_codex_config:-${HOME}/.codex/config.toml}:/root/.codex/config.toml
+      - ${host_codex_auth:-${HOME}/.codex}:/root/.codex
       - ${host_claude_config:-${HOME}/.claude.json}:/root/.claude.json
       - ${host_claude_dir:-${HOME}/.claude}:/root/.claude
       - ${host_ssh_dir:-${HOME}/.ssh}:/root/.ssh

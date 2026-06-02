@@ -6,7 +6,7 @@ export PATH="$HOME/.local/bin:$GOBIN:/usr/local/go/bin:$PATH"
 export ZSH="${ZSH:-/opt/oh-my-zsh}"
 export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
 
-ZSH_THEME="${ZSH_THEME:-robbyrussell}"
+ZSH_THEME="${ZSH_THEME:-gallifrey}"
 DISABLE_AUTO_UPDATE="true"
 COMPLETION_WAITING_DOTS="true"
 
