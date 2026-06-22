@@ -1,0 +1,123 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+% !Mode:: "TeX:UTF-8"
+
+\documentclass{resume}
+\usepackage{zh_CN-Adobefonts_external} % Simplified Chinese Support using external fonts (./fonts/zh_CN-Adobe/)
+%\usepackage{zh_CN-Adobefonts_internal} % Simplified Chinese Support using system fonts
+\usepackage{linespacing_fix} % disable extra space before next section
+\usepackage{cite}
+
+\begin{document}
+\pagenumbering{gobble} % suppress displaying page number
+
+\name{唐铭}
+
+\basicInfo{
+  \email{tnnmigga@outlook.com} \textperiodcentered\ 
+  \phone{(+86) 173-6207-4486} \textperiodcentered\ 
+  \text{\faFlag 成都}}
+
+\section{\faGraduationCap\ 教育背景}
+\datedsubsection{\textbf{潍坊科技学院},软件工程,本科}{2016 -- 2020}
+期间担任过学校ACM协会队长，带队参加过若干程序设计竞赛
+\\相关获奖: ACM省赛铜奖，蓝桥杯C++组国赛二等奖、省赛一等奖，团体程序设计天梯赛团体三等奖等
+
+\section{\faUsers\ 工作经历}
+\datedsubsection{\textbf{某web3团队}}{2024年1月 -- 至今}
+\role{golang服务器}{}
+\begin{itemize}
+  \item 负责各类业务通用的分布式后端搭建, 框架开发, 核心数值算法开发, 将开发流程标准化为流水线式的简单工作, 业务涉及GameFi, DeFi, NFT, AI等领域
+  \item 以模块为服务器进程的骨架，挂载请求处理函数，并控制线程模型[事件循环, Actor, 协程并发, 协程池]，实现高并发下的无锁编程，一个或多个模块拼装成一类进程
+  \item 用DDD的编码方式使复杂模块的若干包解耦合，并形成代码规范，利用代码生成等方式提升开发效率、减少失误、增加代码可读性可维护性
+  \item 进程间通过消息中间件NATS通信，利用NATS的主题订阅、分组订阅、流等特性，实现消息单播、广播、请求响应等方式进行进程间通信
+  \item 设计编解码器，通过泛型和反射，将类型注册的过程隐藏在注册消息处理函数和发起请求的过程中，支持protobuf，json等多种编码方式
+  \item 用户数据主要存储在mongo，利用反射实现自动增量保存
+  \item 利用clickhouse构建时序数据库，存储BI数据和服务器日志, 用于数据分析和故障排查
+  \item 开发新算法框架，实现核心数值算法，规范开发流程，使后续的开发工作做到用最简单的代码实现复杂规则，降低开发难度和提升开发效率，以及开发数值验证工具
+  \item 设计利用mongo存储的可持久化定时器消息，以及进程内发布订阅模式的事件消息增加模块的内聚性
+  \item 开发了由配置驱动的运营活动框架，提高运营活动的开发效率，以及开发若干如[限时排行榜]的具体活动玩法
+  \item 开发websocket网关、http网关等网络接入层，支持断线重连，限流等
+  \item 开发区块链支付系统，支持ETH, SOL等主流网络和主流合约代币
+  \item 开发若干效率工具，如REPL命令行客户端, 支持输入提示和自动补全, 用于模拟消息收发、测试请求、性能测试
+  \item 其他若干服务器基本功能，如并发安全且可以热更新的配置系统
+  
+\end{itemize}
+\datedsubsection{\textbf{杭州雅乐信息技术服务有限公司}}{2023年5月 -- 2023年11月}
+\role{golang服务器}{}
+\begin{itemize}
+  \item 负责自研语音社交游戏开发工作[后项目组解散]
+  \item 重新设计了业务模块的代码结构和开发规范，用DDD编码结构解决关联包的循环引用问题，规范编码结构，利用脚本生成代码简化流程提高效率
+  \item 优化了接入层和业务层的交互方式, 将原本在接入层阻塞等待的gRPC请求变为异步的gRPC流, 同时在业务层对玩家数据相关请求的处理函数进行了统一封装, 用channel缓冲请求, 保证消息时序性的同时使业务开发不再关心竞态和锁, 优化了服务器延迟和提升了吞吐量
+  \item 开发模块化构建的运营活动框架，保证了较高的开发效率和维护体验, 支持定时触发, 条件触发, 循环触发等规则
+  \item 开发各类常规玩法，如基于事件订阅的任务系统、排行榜系统，社交系统等
+  \item 可持久化定时器，配置系统等功能
+\end{itemize}
+\datedsubsection{\textbf{tap4fun}}{2022年3月 -- 2023年4月}
+\role{golang服务器}{}
+\begin{itemize}
+  \item 产品为类似万国觉醒的大地图自由行军slg手游[猿族时代]，熟悉大地图算法原理
+  \item 负责游戏中后期新增玩法和运营活动开发, 如新增排行榜，新增buff，新任务系统，新跨服战，主城布局等; 运营活动如各类抽奖玩法，春节红包
+  \item 开发和维护服务器开发运营涉及的工具，如导表，lua批量修复玩家数据
+\end{itemize}
+
+\datedsubsection{\textbf{苏州大禹网络科技有限公司}}{2021年1月 -- 2022年3月}
+\begin{onehalfspacing}
+\role{nodejs服务器}{}
+\begin{itemize}
+  \item 产品为模拟经营手游[桃源深处有人家]
+  \item 开发游戏主要的模拟经营玩法，以及系统功能和玩法，如邮件、排行榜、任务等
+  \item 开发前后端分离的游戏后台用于内测期间邮件、公告收发和统计数据查看
+  \item 编写维护各类开发工具，如配置表自动更新，起停服脚本
+\end{itemize}
+\end{onehalfspacing}
+
+\datedsubsection{\textbf{成都华日通讯技术股份有限公司}}{2020年4月 -- 2020年12月}
+\begin{onehalfspacing}
+\role{实习算法工程师}{}
+\begin{itemize}
+  \item 主要负责无线电测向定位算法方案的c++代码编写和修改，以及配合硬件部门集成测试
+  \item 设计过一个球面测向交汇定位算法，利用球面几何公式推导加上测向数据计算短波信号在地球球面上的大致位置
+\end{itemize}
+
+\end{onehalfspacing}
+
+
+% Reference Test
+%\datedsubsection{\textbf{Paper Title\cite{zaharia2012resilient}}}{May. 2015}
+%An xxx optimized for xxx\cite{verma2015large}
+%\begin{itemize}
+%  \item main contribution
+%\end{itemize}
+
+
+\section{\faCogs\ 主要技能}
+% increase linespacing [parsep=0.5ex]
+\begin{itemize}[parsep=0.5ex]
+  \item 精通golang; 熟悉javascript, python
+  \item 熟悉AI编程范式, 擅长利用AI辅助工作，提升开发效率
+  \item 熟悉分布式服务器的常见套路和集群化思路, 善于应对高负载高并发的业务场景
+  \item 擅长mysql, redis, mongodb, clickhouse四个数据库
+  \item 熟悉各类网络通信，进程间通信，RPC实现等
+  \item 有良好数据结构和算法基础
+  \item 有一定数学基础[基本算术、微积分、概率论]
+  \item 有良好的编码风格和开发习惯
+  \item 熟悉git, svn, docker等工具以及相关的CI/CD流程
+\end{itemize}
+
+\section{\faGithub\ 代码案例}
+\begin{itemize}[parsep=0.5ex]
+\item 地址: \href{https://github.com/tnnmigga/demo}{https://github.com/tnnmigga/demo}
+\end{itemize}
+
+\section{\faInfo\ 其他信息}
+% increase linespacing [parsep=0.5ex]
+\begin{itemize}[parsep=0.5ex]
+  \item 确定之后稳定在成都工作, 意向达成一周内到岗
+\end{itemize}
+
+%% Reference
+%\newpage
+%\bibliographystyle{IEEETran}
+%\bibliography{mycite}
+\end{document}
